@@ -12,6 +12,7 @@ custom_hooks = [dict(type='NumClassCheckHook')]
 dist_params = dict(backend='nccl')
 log_level = 'INFO'
 load_from = None
+# 训练断了 恢复点
 resume_from = None
 workflow = [('train', 1)]
 

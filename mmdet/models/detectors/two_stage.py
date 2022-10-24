@@ -68,7 +68,8 @@ class TwoStageDetector(BaseDetector):
         if self.with_neck:
             x = self.neck(x)
         return x
-
+        
+    # 计算参数量 也就是需要forward一遍 但是又不需要真正传数据
     def forward_dummy(self, img):
         """Used for computing network flops.
 

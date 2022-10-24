@@ -9,6 +9,7 @@ from mmdet.utils import replace_cfg_vals, update_data_root
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Print the whole config')
+    # 一条修改
     parser.add_argument('config', help='config file path')
     parser.add_argument(
         '--options',
