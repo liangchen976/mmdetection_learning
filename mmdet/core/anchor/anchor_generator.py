@@ -81,9 +81,12 @@ class AnchorGenerator:
                 f'{strides} and {centers}'
 
         # calculate base sizes of anchors
+        # [(8,8),(16,16),(32,32),(64,64),(128,128)]
         self.strides = [_pair(stride) for stride in strides]
+        # [8, 16, 32, 64, 128]因为stride含义是感受野大小，故代码将其命名为base_sizes.
         self.base_sizes = [min(stride) for stride in self.strides
                            ] if base_sizes is None else base_sizes
+        # 保证anchor和多级别特征图对应
         assert len(self.base_sizes) == len(self.strides), \
             'The number of strides should be the same as base sizes, got ' \
             f'{self.strides} and {self.base_sizes}'
@@ -95,6 +98,8 @@ class AnchorGenerator:
             ' be set at the same time'
         if scales is not None:
             self.scales = torch.Tensor(scales)
+        # octave_base_scale 是retinanet网络中的 是一个固定的 
+        # 而在faster rcnn中 是可以多种尺度的
         elif octave_base_scale is not None and scales_per_octave is not None:
             octave_scales = np.array(
                 [2**(i / scales_per_octave) for i in range(scales_per_octave)])

@@ -45,6 +45,7 @@ class BaseDenseHead(BaseModule, metaclass=ABCMeta):
         such as CenterNess in FCOS, IoU branch in ATSS.
 
         Args:
+            # num_priors表示每一个网格先验框的数量
             cls_scores (list[Tensor]): Classification scores for all
                 scale levels, each is a 4D-tensor, has shape
                 (batch_size, num_priors * num_classes, H, W).
