@@ -131,6 +131,7 @@ class TwoStageDetector(BaseDetector):
 
         # RPN forward and loss
         if self.with_rpn:
+            # 先定义好proposals的属性 最大2000个框 
             proposal_cfg = self.train_cfg.get('rpn_proposal',
                                               self.test_cfg.rpn)
             rpn_losses, proposal_list = self.rpn_head.forward_train(
