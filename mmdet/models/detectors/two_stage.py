@@ -52,6 +52,7 @@ class TwoStageDetector(BaseDetector):
         self.train_cfg = train_cfg
         self.test_cfg = test_cfg
 
+    # 下面两个都是bool
     @property
     def with_rpn(self):
         """bool: whether the detector has RPN"""

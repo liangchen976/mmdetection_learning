@@ -135,6 +135,7 @@ def main():
     setup_multi_processes(cfg)
 
     # set cudnn_benchmark
+    # 对卷积层不变的算法可以设置为True 是搜索最适算法
     if cfg.get('cudnn_benchmark', False):
         torch.backends.cudnn.benchmark = True
 
@@ -176,11 +177,14 @@ def main():
 
     # create work_dir
     mmcv.mkdir_or_exist(osp.abspath(cfg.work_dir))
-    # dump config
+    # dump config 
+    # 这里是保存config参数到work_dir ，后面的osp.basename是配置文件名字 本意是取路径的最后一级的name
+    # .eg. ('/data/liangc/workspace/parts', 'parts')
     cfg.dump(osp.join(cfg.work_dir, osp.basename(args.config)))
     # init the logger before other steps
     timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
     log_file = osp.join(cfg.work_dir, f'{timestamp}.log')
+    # 创建log文件存储log
     logger = get_root_logger(log_file=log_file, log_level=cfg.log_level)
 
     # init the meta dict to record some important information such as
@@ -207,8 +211,10 @@ def main():
     set_random_seed(seed, deterministic=args.deterministic)
     cfg.seed = seed
     meta['seed'] = seed
+    # 配置文件的py名 
     meta['exp_name'] = osp.basename(args.config)
-
+    
+    # build检测器
     model = build_detector(
         cfg.model,
         train_cfg=cfg.get('train_cfg'),
